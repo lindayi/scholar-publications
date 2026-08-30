@@ -1,0 +1,963 @@
+/* Scholar Publications — front end styles.
+   Colours are driven by custom properties so the block can inherit the theme
+   palette and respond to dark mode without extra configuration. */
+
+.schpub {
+	color-scheme: light;
+	--schpub-surface: #fff;
+	--schpub-fg: currentColor;
+	--schpub-muted: color-mix(in srgb, currentColor 62%, transparent);
+	--schpub-faint: color-mix(in srgb, currentColor 12%, transparent);
+	--schpub-line: color-mix(in srgb, currentColor 16%, transparent);
+	--schpub-accent: #2563eb;
+	--schpub-accent-soft: color-mix(in srgb, var(--schpub-accent) 12%, transparent);
+	--schpub-radius: 10px;
+
+	font-size: 16px;
+	line-height: 1.55;
+}
+
+@supports not (color: color-mix(in srgb, red 50%, transparent)) {
+	.schpub {
+		--schpub-muted: #667085;
+		--schpub-faint: #f1f3f7;
+		--schpub-line: #e3e6ec;
+	}
+}
+
+/* ---------- metrics ---------- */
+
+/* A quiet typographic block rather than four filled boxes: the numbers carry
+   the emphasis and the panel stops competing with the publication list. */
+.schpub-stats {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 8px;
+	margin: 0 0 12px;
+}
+
+.schpub-stat {
+	margin: 0;
+	padding: 8px 11px;
+	border: 1px solid var(--schpub-line);
+	border-radius: var(--schpub-radius);
+}
+
+.schpub-stat[title] {
+	cursor: help;
+}
+
+.schpub-stat-label {
+	margin: 0;
+	font-size: 0.68rem;
+	text-transform: uppercase;
+	letter-spacing: 0.07em;
+	color: var(--schpub-muted);
+	white-space: nowrap;
+}
+
+.schpub-stat-value {
+	margin: 1px 0 0;
+	font-size: 1.45rem;
+	font-weight: 700;
+	line-height: 1.15;
+	font-variant-numeric: tabular-nums;
+	color: var(--schpub-fg);
+}
+
+.schpub-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 14px;
+	align-items: center;
+	margin: 0 0 22px;
+	font-size: 0.85rem;
+	color: var(--schpub-muted);
+}
+
+.schpub-meta a {
+	color: var(--schpub-accent);
+	text-decoration: none;
+}
+
+.schpub-meta a:hover {
+	text-decoration: underline;
+}
+
+/* ---------- citations chart ---------- */
+
+.schpub-chart {
+	margin: 0 0 24px;
+	padding: 14px 14px 8px;
+	border: 1px solid var(--schpub-line);
+	border-radius: var(--schpub-radius);
+}
+
+.schpub-chart figcaption {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 8px;
+	font-size: 0.72rem;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: var(--schpub-muted);
+	margin-bottom: 10px;
+}
+
+/* Ten labelled bars will not fit the rail, so the exact figure is written here
+   on hover or keyboard focus instead. */
+.schpub-chart-readout {
+	text-transform: none;
+	letter-spacing: 0;
+	font-size: 0.72rem;
+	font-variant-numeric: tabular-nums;
+	color: var(--schpub-fg);
+	font-weight: 600;
+	white-space: nowrap;
+	min-height: 1em;
+}
+
+.schpub-bar:focus {
+	outline: 2px solid var(--schpub-accent);
+	outline-offset: 1px;
+}
+
+/* Gridlines and their labels are positioned siblings of the plot so the
+   stretched SVG cannot distort the text. */
+.schpub-chart-body {
+	position: relative;
+	padding-right: 34px;
+}
+
+.schpub-chart-plot {
+	height: 110px;
+}
+
+.schpub-gridline {
+	position: absolute;
+	left: 0;
+	right: 34px;
+	height: 0;
+	border-top: 1px solid var(--schpub-line);
+	pointer-events: none;
+}
+
+.schpub-gridtick {
+	position: absolute;
+	right: 0;
+	width: 30px;
+	transform: translateY(50%);
+	text-align: right;
+	font-size: 0.62rem;
+	line-height: 1;
+	color: var(--schpub-muted);
+	font-variant-numeric: tabular-nums;
+	pointer-events: none;
+}
+
+.schpub-chart svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+	overflow: visible;
+}
+
+.schpub-bar {
+	fill: var(--schpub-accent);
+	opacity: 0.75;
+	transition: opacity 0.15s ease;
+}
+
+.schpub-bar:hover {
+	opacity: 1;
+}
+
+.schpub-chart-axis {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 6px;
+	padding-right: 34px;
+	font-size: 0.7rem;
+	color: var(--schpub-muted);
+	font-variant-numeric: tabular-nums;
+}
+
+
+
+/* ---------- controls ---------- */
+
+.schpub-controls {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap: 12px;
+	align-items: center;
+	margin-bottom: 18px;
+}
+
+.schpub-search {
+	position: relative;
+	grid-column: 1 / -1;
+}
+
+.schpub-search-icon {
+	position: absolute;
+	left: 11px;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 15px;
+	height: 15px;
+	color: var(--schpub-muted);
+	pointer-events: none;
+}
+
+.schpub-input {
+	width: 100%;
+	padding: 10px 34px 10px 34px;
+	border: 1px solid var(--schpub-line);
+	border-radius: var(--schpub-radius);
+	background: transparent;
+	color: inherit;
+	font: inherit;
+}
+
+.schpub-input:focus {
+	outline: 2px solid var(--schpub-accent);
+	outline-offset: 1px;
+}
+
+.schpub-clear {
+	position: absolute;
+	right: 8px;
+	top: 50%;
+	transform: translateY(-50%);
+	border: 0;
+	background: transparent;
+	color: var(--schpub-muted);
+	font-size: 1.3rem;
+	line-height: 1;
+	cursor: pointer;
+	padding: 2px 6px;
+}
+
+.schpub-selects {
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+	grid-column: 2;
+	justify-self: end;
+}
+
+.schpub-field {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 0.82rem;
+	color: var(--schpub-muted);
+}
+
+.schpub-field select {
+	font: inherit;
+	padding: 6px 8px;
+	border: 1px solid var(--schpub-line);
+	border-radius: 8px;
+	background: transparent;
+	color: inherit;
+}
+
+.schpub-types {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	grid-column: 1;
+	grid-row: 2;
+}
+
+.schpub-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 12px;
+	border: 1px solid var(--schpub-line);
+	border-radius: 999px;
+	background: transparent;
+	color: inherit;
+	font: inherit;
+	font-size: 0.82rem;
+	cursor: pointer;
+	transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.schpub-pill:hover {
+	border-color: var(--schpub-accent);
+}
+
+.schpub-pill.is-active {
+	background: var(--schpub-accent-soft);
+	border-color: var(--schpub-accent);
+	font-weight: 600;
+}
+
+.schpub-pill-n {
+	font-size: 0.72rem;
+	color: var(--schpub-muted);
+	font-variant-numeric: tabular-nums;
+}
+
+.schpub-count {
+	margin: 0;
+	font-size: 0.8rem;
+	color: var(--schpub-muted);
+	grid-column: 2;
+	grid-row: 2;
+	justify-self: end;
+	font-variant-numeric: tabular-nums;
+}
+
+/* ---------- list ---------- */
+
+.schpub-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	counter-reset: schpub;
+}
+
+/* The year heading pins to the top of the viewport so the year in view is always
+   visible. It needs an opaque background to hide entries passing underneath. */
+.schpub-year-head {
+	position: sticky;
+	top: 0;
+	z-index: 2;
+	background: var(--schpub-surface);
+	margin: 26px 0 10px;
+	padding: 7px 0 6px;
+	border-bottom: 2px solid var(--schpub-line);
+	font-size: 1.05rem;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	font-variant-numeric: tabular-nums;
+	transition: box-shadow 0.15s ease;
+}
+
+/* Added by the script once a heading is actually pinned, so the separation only
+   appears while it overlaps content. */
+.schpub-year-head.is-stuck {
+	box-shadow: 0 6px 10px -8px rgba(0, 0, 0, 0.45);
+}
+
+/* Clear the WordPress toolbar when an administrator is viewing the site. */
+.admin-bar .schpub-year-head {
+	top: 32px;
+}
+
+@media (max-width: 782px) {
+	.admin-bar .schpub-year-head {
+		top: 46px;
+	}
+}
+
+.schpub-year-head:first-child {
+	margin-top: 0;
+}
+
+.schpub-item {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap: 6px 16px;
+	padding: 14px 0;
+	border-bottom: 1px solid var(--schpub-line);
+}
+
+.schpub-item-main {
+	min-width: 0;
+}
+
+.schpub-title {
+	margin: 0 0 4px;
+	font-size: 1.02rem;
+	font-weight: 600;
+	line-height: 1.4;
+}
+
+.schpub-title a {
+	color: inherit;
+	text-decoration: none;
+	background-image: linear-gradient(var(--schpub-accent), var(--schpub-accent));
+	background-size: 0 1.5px;
+	background-position: 0 100%;
+	background-repeat: no-repeat;
+	transition: background-size 0.2s ease, color 0.2s ease;
+}
+
+.schpub-title a:hover {
+	color: var(--schpub-accent);
+	background-size: 100% 1.5px;
+}
+
+.schpub-authors {
+	margin: 0 0 4px;
+	font-size: 0.88rem;
+	color: var(--schpub-muted);
+}
+
+.schpub-me {
+	color: var(--schpub-fg);
+	font-weight: 700;
+}
+
+.schpub-venue {
+	display: block;
+	margin: 0;
+	font-size: 0.85rem;
+	line-height: 1.5;
+	color: var(--schpub-muted);
+}
+
+.schpub-badge {
+	margin-right: 8px;
+}
+
+/* Venue, volume and year are one continuous text run: as flex children the year
+   was being pushed onto a line of its own whenever the venue wrapped. */
+.schpub-venue-text {
+	display: inline;
+}
+
+/* The year duplicates the year heading while the list is grouped by year, so it
+   is only shown once those headings are hidden. */
+.schpub-headings-on .schpub-item-year {
+	display: none;
+}
+
+.schpub-venue-name {
+	font-style: italic;
+}
+
+.schpub-badge {
+	display: inline-block;
+	padding: 1px 8px;
+	border-radius: 999px;
+	font-size: 0.7rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	border: 1px solid var(--schpub-line);
+	color: var(--schpub-muted);
+	white-space: nowrap;
+}
+
+.schpub-badge-journal {
+	color: #0f766e;
+	border-color: #0f766e55;
+	background: #0f766e14;
+}
+
+.schpub-badge-conference {
+	color: #b45309;
+	border-color: #b4530955;
+	background: #b4530914;
+}
+
+.schpub-badge-preprint {
+	color: #6d28d9;
+	border-color: #6d28d955;
+	background: #6d28d914;
+}
+
+.schpub-badge-patent {
+	color: #be123c;
+	border-color: #be123c55;
+	background: #be123c14;
+}
+
+.schpub-badge-thesis {
+	color: #1d4ed8;
+	border-color: #1d4ed855;
+	background: #1d4ed814;
+}
+
+.schpub-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin: 8px 0 0;
+	font-size: 0.8rem;
+}
+
+.schpub-link {
+	border: 0;
+	background: transparent;
+	padding: 0;
+	font: inherit;
+	font-size: 0.8rem;
+	color: var(--schpub-accent);
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.schpub-link:hover {
+	text-decoration: underline;
+}
+
+.schpub-cited {
+	text-align: center;
+	align-self: start;
+	min-width: 66px;
+}
+
+.schpub-cited a {
+	text-decoration: none;
+	color: inherit;
+	display: block;
+}
+
+.schpub-cited a:hover .schpub-cited-n {
+	color: var(--schpub-accent);
+}
+
+.schpub-cited-n {
+	display: block;
+	font-size: 1.15rem;
+	font-weight: 700;
+	line-height: 1.1;
+	font-variant-numeric: tabular-nums;
+}
+
+.schpub-cited-label {
+	display: block;
+	font-size: 0.68rem;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: var(--schpub-muted);
+}
+
+/* ---------- details panel ---------- */
+
+.schpub-panel {
+	grid-column: 1 / -1;
+	margin-top: 10px;
+	padding: 12px 14px;
+	border-left: 3px solid var(--schpub-accent);
+	background: var(--schpub-faint);
+	border-radius: 0 var(--schpub-radius) var(--schpub-radius) 0;
+}
+
+.schpub-abstract {
+	margin: 0;
+	font-size: 0.88rem;
+	text-align: justify;
+	hyphens: auto;
+}
+
+.schpub-publisher {
+	margin: 8px 0 0;
+	font-size: 0.78rem;
+	color: var(--schpub-muted);
+}
+
+.schpub-spark-wrap {
+	margin-top: 14px;
+}
+
+.schpub-spark-title {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 10px;
+	margin: 0 0 6px;
+	font-size: 0.72rem;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: var(--schpub-muted);
+}
+
+.schpub-spark-total {
+	text-transform: none;
+	letter-spacing: 0;
+	font-size: 0.75rem;
+	font-variant-numeric: tabular-nums;
+}
+
+.schpub-spark {
+	display: flex;
+	align-items: flex-end;
+	gap: 6px;
+	flex-wrap: wrap;
+}
+
+.schpub-spark-col {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	flex: 0 0 42px;
+}
+
+/* The count sits above its own bar so a year can never be mistaken for it. */
+.schpub-spark-n {
+	font-size: 0.7rem;
+	font-weight: 700;
+	line-height: 1;
+	margin-bottom: 3px;
+	font-variant-numeric: tabular-nums;
+	color: var(--schpub-fg);
+}
+
+.schpub-spark-track {
+	display: flex;
+	align-items: flex-end;
+	width: 100%;
+	height: 34px;
+}
+
+.schpub-spark-bar {
+	display: block;
+	width: 100%;
+	background: var(--schpub-accent);
+	opacity: 0.55;
+	border-radius: 3px 3px 0 0;
+	min-height: 3px;
+	transition: opacity 0.15s ease;
+}
+
+.schpub-spark-col:hover .schpub-spark-bar {
+	opacity: 1;
+}
+
+.schpub-spark-year {
+	font-size: 0.66rem;
+	color: var(--schpub-muted);
+	margin-top: 4px;
+	font-variant-numeric: tabular-nums;
+	letter-spacing: -0.01em;
+}
+
+/* ---------- states ---------- */
+
+.schpub-noresults,
+.schpub-empty {
+	padding: 24px;
+	text-align: center;
+	color: var(--schpub-muted);
+	border: 1px dashed var(--schpub-line);
+	border-radius: var(--schpub-radius);
+}
+
+.schpub-item[hidden],
+.schpub-year-head[hidden] {
+	display: none !important;
+}
+
+.schpub-toast {
+	position: fixed;
+	left: 50%;
+	bottom: 28px;
+	transform: translateX(-50%) translateY(12px);
+	background: #111827;
+	color: #fff;
+	padding: 9px 18px;
+	border-radius: 999px;
+	font-size: 0.85rem;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.2s ease, transform 0.2s ease;
+	z-index: 9999;
+}
+
+.schpub-toast.is-visible {
+	opacity: 1;
+	transform: translateX(-50%) translateY(0);
+}
+
+/* ---------- sidebar layout ----------
+   The theme constrains normal blocks to its content size (720px here). With a
+   rail taking its share that would leave the list too narrow, so the block
+   reclaims the width of its parent column instead. The rail then costs the list
+   almost nothing while removing the tall stack of chrome above it. */
+
+.schpub.schpub-wide {
+	/* Reclaim the parent column, but only towards the right. Breaking out
+	   symmetrically would pull the list left of the surrounding page text and
+	   look misaligned, so the left edge stays on the theme's content edge. */
+	max-width: none !important;
+	margin-left: max( 0px, calc( ( 100% - var( --wp--style--global--content-size, 720px ) ) / 2 ) ) !important;
+	margin-right: 0 !important;
+}
+
+.schpub-has-rail {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 224px;
+	column-gap: 26px;
+	align-items: start;
+}
+
+.schpub-main {
+	grid-column: 1;
+	grid-row: 1;
+	min-width: 0;
+}
+
+.schpub-rail {
+	grid-column: 2;
+	grid-row: 1;
+	position: sticky;
+	top: 24px;
+	z-index: 1;
+	max-height: calc(100vh - 48px);
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	padding-right: 2px;
+	scrollbar-width: thin;
+}
+
+.schpub-rail::-webkit-scrollbar {
+	width: 6px;
+}
+
+.schpub-rail::-webkit-scrollbar-thumb {
+	background: var(--schpub-line);
+	border-radius: 3px;
+}
+
+/* Compact the metrics so four of them fit a narrow rail. */
+.schpub-rail .schpub-stats {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 7px;
+	margin-bottom: 12px;
+}
+
+.schpub-rail .schpub-stat {
+	padding: 7px 10px;
+}
+
+.schpub-rail .schpub-stat-value {
+	font-size: 1.2rem;
+}
+
+.schpub-rail .schpub-stat-label {
+	font-size: 0.62rem;
+	letter-spacing: 0.05em;
+}
+
+.schpub-rail .schpub-meta {
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 2px;
+	margin-bottom: 16px;
+	font-size: 0.78rem;
+}
+
+.schpub-rail .schpub-chart {
+	margin-bottom: 16px;
+	padding: 10px 10px 6px;
+}
+
+.schpub-rail .schpub-chart-plot {
+	height: 86px;
+}
+
+.schpub-rail .schpub-gridtick {
+	font-size: 0.58rem;
+}
+
+.schpub-rail .schpub-chart figcaption {
+	font-size: 0.66rem;
+	margin-bottom: 7px;
+}
+
+.schpub-rail .schpub-chart-axis {
+	font-size: 0.6rem;
+}
+
+/* Stack the controls vertically instead of the wide two-column grid. */
+.schpub-rail .schpub-controls {
+	display: block;
+	margin-bottom: 0;
+}
+
+.schpub-rail .schpub-search {
+	margin-bottom: 12px;
+}
+
+.schpub-rail .schpub-input {
+	padding: 8px 30px 8px 31px;
+	font-size: 0.88rem;
+}
+
+.schpub-rail .schpub-selects {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 8px;
+	margin-bottom: 12px;
+}
+
+.schpub-rail .schpub-field {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 8px;
+}
+
+.schpub-rail .schpub-field select {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.schpub-rail .schpub-types {
+	gap: 6px;
+	margin-bottom: 12px;
+}
+
+.schpub-rail .schpub-pill {
+	padding: 4px 10px;
+	font-size: 0.78rem;
+}
+
+.schpub-rail .schpub-count {
+	font-size: 0.76rem;
+	padding-top: 10px;
+	border-top: 1px solid var(--schpub-line);
+}
+
+/* Narrower screens get a slimmer rail so the list keeps a comfortable measure. */
+@media (max-width: 1400px) {
+	.schpub-has-rail {
+		grid-template-columns: minmax(0, 1fr) 204px;
+		column-gap: 20px;
+	}
+
+	.schpub-rail .schpub-stat-value {
+		font-size: 1.15rem;
+	}
+}
+
+/* Below this width the rail would squeeze the list, so it becomes a normal
+   block above the list again. */
+@media (max-width: 1250px) {
+	.schpub-has-rail {
+		display: block;
+	}
+
+	.schpub-rail {
+		position: static;
+		max-height: none;
+		overflow: visible;
+		margin-bottom: 22px;
+	}
+
+	.schpub-rail .schpub-stats {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+
+	.schpub-rail .schpub-selects {
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+
+	.schpub-rail .schpub-field {
+		justify-content: flex-start;
+	}
+}
+
+@media (max-width: 782px) {
+	.schpub-rail .schpub-stats {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+/* A sticky rail must not fight a theme that already offsets for a fixed header. */
+@media (prefers-reduced-motion: reduce) {
+	.schpub-rail {
+		scroll-behavior: auto;
+	}
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 782px) {
+	.schpub-stats {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.schpub-controls {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.schpub-selects,
+	.schpub-types,
+	.schpub-count {
+		grid-column: 1;
+		justify-self: start;
+	}
+
+	.schpub-selects {
+		grid-row: auto;
+	}
+
+	.schpub-types {
+		grid-row: auto;
+	}
+
+	.schpub-count {
+		grid-row: auto;
+	}
+
+	.schpub-item {
+		grid-template-columns: minmax(0, 1fr) auto;
+		column-gap: 10px;
+	}
+
+	.schpub-cited {
+		min-width: 0;
+		text-align: right;
+	}
+
+	.schpub-cited-n {
+		font-size: 0.98rem;
+	}
+
+	.schpub-cited-label {
+		font-size: 0.6rem;
+	}
+}
+
+@media print {
+	.schpub-controls,
+	.schpub-chart,
+	.schpub-actions {
+		display: none !important;
+	}
+}
+
+/* ---------- multi-select type pills ---------- */
+
+.schpub-types-hint {
+	width: 100%;
+	margin: 0 0 6px;
+	font-size: 0.68rem;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: var(--schpub-muted);
+}
+
+.schpub-pill[aria-pressed="true"] {
+	background: var(--schpub-accent-soft);
+	border-color: var(--schpub-accent);
+	font-weight: 600;
+}
+
+.schpub-pill[aria-pressed="true"] .schpub-pill-n {
+	color: var(--schpub-accent);
+}
+
+.schpub-pill:focus-visible {
+	outline: 2px solid var(--schpub-accent);
+	outline-offset: 2px;
+}
+
+/* Truncate long venue names in the rail's select rather than widening it. */
+.schpub-rail .schpub-field select {
+	max-width: 100%;
+	text-overflow: ellipsis;
+}

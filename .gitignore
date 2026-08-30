@@ -1,0 +1,15 @@
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+
+# Dependencies and build output
+node_modules/
+vendor/
+*.zip
+
+# Local config
+.env
