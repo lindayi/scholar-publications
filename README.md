@@ -147,6 +147,23 @@ the error is shown on the settings screen.
   re-check costs a search. Set **Re-check details after** to a number of days if
   you want edits picked up; entries then refresh oldest first.
 
+## Theming and dark mode
+
+The block inherits the page's colour scheme rather than declaring its own. Where
+the active theme exposes the standard block-theme palette, the accent colour and
+the opaque surface behind sticky year headings are taken from
+`--wp--preset--color--primary` and `--wp--preset--color--background`, so the list
+matches the theme automatically.
+
+Type badges resolve through the CSS `light-dark()` function, which follows the
+`color-scheme` in effect. If your theme or a dark mode plugin sets
+`color-scheme: dark`, the badges switch to lifted hues that stay legible against
+a dark background; otherwise they render light. Browsers without `light-dark()`
+fall back to the light values.
+
+Everything else derives from `currentColor` through `color-mix()`, so no
+configuration is needed either way.
+
 ## Extending
 
 Venue abbreviations ship with computer science venues. Add your own field

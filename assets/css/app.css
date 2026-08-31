@@ -3,13 +3,12 @@
    palette and respond to dark mode without extra configuration. */
 
 .schpub {
-	color-scheme: light;
-	--schpub-surface: #fff;
+	--schpub-surface: var( --wp--preset--color--background, #fff );
 	--schpub-fg: currentColor;
 	--schpub-muted: color-mix(in srgb, currentColor 62%, transparent);
 	--schpub-faint: color-mix(in srgb, currentColor 12%, transparent);
 	--schpub-line: color-mix(in srgb, currentColor 16%, transparent);
-	--schpub-accent: #2563eb;
+	--schpub-accent: var( --wp--preset--color--primary, #2563eb );
 	--schpub-accent-soft: color-mix(in srgb, var(--schpub-accent) 12%, transparent);
 	--schpub-radius: 10px;
 
@@ -219,6 +218,14 @@
 	background: transparent;
 	color: inherit;
 	font: inherit;
+}
+
+/* The block supplies its own clear button, so hide the browser's native one
+   rather than showing two. It becomes visible once a colour scheme is declared. */
+.schpub-input::-webkit-search-cancel-button,
+.schpub-input::-webkit-search-decoration {
+	-webkit-appearance: none;
+	appearance: none;
 }
 
 .schpub-input:focus {
@@ -449,32 +456,37 @@
 
 .schpub-badge-journal {
 	color: #0f766e;
-	border-color: #0f766e55;
-	background: #0f766e14;
+	color: light-dark( #0f766e, #5eead4 );
+	border-color: color-mix( in srgb, currentColor 45%, transparent );
+	background: color-mix( in srgb, currentColor 12%, transparent );
 }
 
 .schpub-badge-conference {
 	color: #b45309;
-	border-color: #b4530955;
-	background: #b4530914;
+	color: light-dark( #b45309, #fcd34d );
+	border-color: color-mix( in srgb, currentColor 45%, transparent );
+	background: color-mix( in srgb, currentColor 12%, transparent );
 }
 
 .schpub-badge-preprint {
 	color: #6d28d9;
-	border-color: #6d28d955;
-	background: #6d28d914;
+	color: light-dark( #6d28d9, #c4b5fd );
+	border-color: color-mix( in srgb, currentColor 45%, transparent );
+	background: color-mix( in srgb, currentColor 12%, transparent );
 }
 
 .schpub-badge-patent {
 	color: #be123c;
-	border-color: #be123c55;
-	background: #be123c14;
+	color: light-dark( #be123c, #fda4af );
+	border-color: color-mix( in srgb, currentColor 45%, transparent );
+	background: color-mix( in srgb, currentColor 12%, transparent );
 }
 
 .schpub-badge-thesis {
 	color: #1d4ed8;
-	border-color: #1d4ed855;
-	background: #1d4ed814;
+	color: light-dark( #1d4ed8, #93c5fd );
+	border-color: color-mix( in srgb, currentColor 45%, transparent );
+	background: color-mix( in srgb, currentColor 12%, transparent );
 }
 
 .schpub-actions {

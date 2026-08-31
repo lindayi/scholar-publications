@@ -5,6 +5,25 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-08-30
+
+### Changed
+
+- The block now follows the surrounding page's colour scheme instead of forcing
+  a light one. Its accent and opaque surface colours are taken from the theme's
+  palette (`--wp--preset--color--primary` and `--wp--preset--color--background`)
+  when the theme provides them, so a dark theme or a dark mode plugin repaints
+  the list with no configuration.
+- Type badges resolve through `light-dark()`, with the light value repeated as a
+  plain declaration for browsers that do not support it, so they stay legible on
+  a dark surface without coupling the plugin to any particular dark mode
+  implementation.
+
+### Fixed
+
+- The browser's native clear button no longer appears alongside the block's own
+  one in the search field.
+
 ## [1.0.0] - 2026-08-30
 
 Initial release.
