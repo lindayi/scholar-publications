@@ -5,6 +5,16 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2026-09-02
+
+### Changed
+
+- The Google Scholar profile link now carries a mortarboard icon, so it lines
+  up with the ORCID line below it instead of starting a glyph-width to its
+  left. The icon is a generic academic glyph in the current text colour rather
+  than Google's own mark, since the plugin is redistributed and the link text
+  already names the service.
+
 ## [1.1.0] - 2026-09-02
 
 ### Added

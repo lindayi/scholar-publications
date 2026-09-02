@@ -83,15 +83,16 @@
 	text-decoration: underline;
 }
 
-/* The mark sits on the text baseline and tracks the adjacent font size, with
-   the buffer space the ORCID display guidelines ask for. */
-.schpub-orcid-link {
+/* Icons sit on the text baseline and track the adjacent font size, with the
+   buffer space the ORCID display guidelines ask for. Both meta links carry one
+   so their labels start at the same x position. */
+.schpub-meta-link {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.5em;
 }
 
-.schpub-orcid-icon {
+.schpub-meta-icon {
 	width: 1em;
 	height: 1em;
 	flex: none;

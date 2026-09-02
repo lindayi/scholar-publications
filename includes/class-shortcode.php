@@ -215,15 +215,15 @@ class SchPub_Shortcode {
 		</dl>
 		<p class="schpub-meta">
 			<?php if ( ! empty( $author['profile_url'] ) ) : ?>
-				<a class="schpub-profile-link" href="<?php echo esc_url( $author['profile_url'] ); ?>" target="_blank" rel="noopener noreferrer">
-					<?php esc_html_e( 'Google Scholar profile', 'scholar-publications' ); ?>
+				<a class="schpub-profile-link schpub-meta-link" href="<?php echo esc_url( $author['profile_url'] ); ?>" target="_blank" rel="noopener noreferrer">
+					<?php self::scholar_icon(); ?><span><?php esc_html_e( 'Google Scholar profile', 'scholar-publications' ); ?></span>
 				</a>
 			<?php endif; ?>
 			<?php
 			$orcid = (string) schpub_setting( 'orcid_id', '' );
 			if ( '' !== $orcid ) :
 				?>
-				<a class="schpub-orcid-link" href="<?php echo esc_url( 'https://orcid.org/' . $orcid ); ?>"
+				<a class="schpub-orcid-link schpub-meta-link" href="<?php echo esc_url( 'https://orcid.org/' . $orcid ); ?>"
 					target="_blank" rel="noopener noreferrer me"
 					aria-label="<?php
 					printf(
@@ -251,6 +251,20 @@ class SchPub_Shortcode {
 	}
 
 	/**
+	 * A mortarboard, marking the Scholar profile link.
+	 *
+	 * Deliberately a generic academic glyph in the current text colour rather
+	 * than Google's own mark: the plugin is redistributed, and the link text
+	 * already names the service. It exists so this line aligns with the ORCID
+	 * line beneath it.
+	 */
+	private static function scholar_icon() {
+		?>
+		<svg class="schpub-meta-icon" viewBox="0 0 24 24" width="14" height="14" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M12 3 1 8.5 12 14l9-4.5V15.5h1.6V8.5z"/><path d="M5.2 11.9v3.6c0 1.7 3 3.1 6.8 3.1s6.8-1.4 6.8-3.1v-3.6L12 15.3z"/></svg>
+		<?php
+	}
+
+	/**
 	 * The ORCID iD mark.
 	 *
 	 * Inlined rather than linked so the rail needs no third-party request, and
@@ -259,7 +273,7 @@ class SchPub_Shortcode {
 	 */
 	private static function orcid_icon() {
 		?>
-		<svg class="schpub-orcid-icon" viewBox="0 0 256 256" width="14" height="14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path fill="#A6CE39" d="M256 128c0 70.7-57.3 128-128 128S0 198.7 0 128 57.3 0 128 0s128 57.3 128 128z"/><path fill="#FFF" d="M86.3 186.2H70.9V79.1h15.4v107.1z"/><path fill="#FFF" d="M108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.5-13.7-39.7-43.7-39.7h-23.7v79.4z"/><path fill="#FFF" d="M88.7 56.8c0 5.5-4.5 10.1-10.1 10.1-5.6 0-10.1-4.6-10.1-10.1 0-5.6 4.5-10.1 10.1-10.1 5.6 0 10.1 4.6 10.1 10.1z"/></svg>
+		<svg class="schpub-meta-icon schpub-orcid-icon" viewBox="0 0 256 256" width="14" height="14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path fill="#A6CE39" d="M256 128c0 70.7-57.3 128-128 128S0 198.7 0 128 57.3 0 128 0s128 57.3 128 128z"/><path fill="#FFF" d="M86.3 186.2H70.9V79.1h15.4v107.1z"/><path fill="#FFF" d="M108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.5-13.7-39.7-43.7-39.7h-23.7v79.4z"/><path fill="#FFF" d="M88.7 56.8c0 5.5-4.5 10.1-10.1 10.1-5.6 0-10.1-4.6-10.1-10.1 0-5.6 4.5-10.1 10.1-10.1 5.6 0 10.1 4.6 10.1 10.1z"/></svg>
 		<?php
 	}
 

@@ -4,7 +4,7 @@ Tags: publications, google scholar, academic, citations, bibliography
 Requires at least: 6.1
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -24,7 +24,7 @@ Built for academic and researcher sites that want their publication list to stay
 * Sticky year headings so the year in view is always visible while scrolling
 * Expandable details with the abstract, publisher, and that publication's own citation history
 * One-click BibTeX copy
-* Optional ORCID iD shown beside the Scholar profile link, following ORCID's display guidelines
+* Optional ORCID iD shown beside the Scholar profile link, following ORCID's display guidelines, with both identifier links icon-aligned
 * Sticky side rail layout that folds above the list on narrow screens
 * Server rendered, so the list is indexable and readable with JavaScript disabled
 * No external JavaScript libraries, no CDN, no tracking
@@ -86,6 +86,9 @@ No. The key is stored in the database, never written to a file, and all API call
 3. The settings screen with sync status and quota.
 
 == Changelog ==
+
+= 1.1.1 =
+* The Google Scholar profile link now carries a mortarboard icon so it aligns with the ORCID line.
 
 = 1.1.0 =
 * Added an optional ORCID iD setting, shown beside the Google Scholar profile link.
