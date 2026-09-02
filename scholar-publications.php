@@ -3,7 +3,7 @@
  * Plugin Name: Scholar Publications
  * Plugin URI:  https://github.com/lindayi/scholar-publications
  * Description: An interactive, filterable publication list for WordPress, sourced from Google Scholar. Provides the [scholar_publications] shortcode.
- * Version:     1.0.1
+ * Version:     1.1.0
  * Author:      Dayi Lin
  * Author URI:  https://lindayi.me
  * License:     MIT
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SCHPUB_VERSION', '1.0.1' );
+define( 'SCHPUB_VERSION', '1.1.0' );
 define( 'SCHPUB_FILE', __FILE__ );
 define( 'SCHPUB_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SCHPUB_URL', plugin_dir_url( __FILE__ ) );
@@ -36,6 +36,7 @@ require_once SCHPUB_DIR . 'includes/class-shortcode.php';
 function schpub_default_settings() {
 	return array(
 		'scholar_id'      => '',
+		'orcid_id'        => '',
 		'serpapi_key'     => '',
 		'refresh'         => 'daily',
 		'max_details_run' => 10,

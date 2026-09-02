@@ -4,7 +4,7 @@ Tags: publications, google scholar, academic, citations, bibliography
 Requires at least: 6.1
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.1.0
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -24,6 +24,7 @@ Built for academic and researcher sites that want their publication list to stay
 * Sticky year headings so the year in view is always visible while scrolling
 * Expandable details with the abstract, publisher, and that publication's own citation history
 * One-click BibTeX copy
+* Optional ORCID iD shown beside the Scholar profile link, following ORCID's display guidelines
 * Sticky side rail layout that folds above the list on narrow screens
 * Server rendered, so the list is indexable and readable with JavaScript disabled
 * No external JavaScript libraries, no CDN, no tracking
@@ -40,7 +41,7 @@ A routine refresh costs one search. Per-publication details are cached by citati
 
 **Disclaimer**
 
-This plugin is not affiliated with, endorsed by, or sponsored by Google. Google Scholar is a trademark of Google LLC. SerpAPI is a trademark of SerpApi, LLC.
+This plugin is not affiliated with, endorsed by, or sponsored by Google, or by ORCID. Google Scholar is a trademark of Google LLC. SerpAPI is a trademark of SerpApi, LLC. ORCID and the ORCID iD mark are trademarks of ORCID, Inc.
 
 == Installation ==
 
@@ -86,10 +87,19 @@ No. The key is stored in the database, never written to a file, and all API call
 
 == Changelog ==
 
+= 1.1.0 =
+* Added an optional ORCID iD setting, shown beside the Google Scholar profile link.
+
+= 1.0.1 =
+* The block now follows the surrounding page's colour scheme instead of forcing light.
+
 = 1.0.0 =
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+Adds an optional ORCID iD field. Existing settings are unaffected.
 
 = 1.0.0 =
 Initial release.

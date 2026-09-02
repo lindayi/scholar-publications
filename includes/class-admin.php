@@ -70,6 +70,10 @@ class SchPub_Admin {
 		$posted   = wp_unslash( $_POST );
 
 		$settings['scholar_id']     = isset( $posted['scholar_id'] ) ? sanitize_text_field( $posted['scholar_id'] ) : '';
+		$orcid_raw              = isset( $posted['orcid_id'] ) ? trim( sanitize_text_field( $posted['orcid_id'] ) ) : '';
+		$settings['orcid_id']   = self::sanitize_orcid( $orcid_raw );
+		// Tell the user rather than silently discarding a mistyped identifier.
+		$orcid_rejected         = '' !== $orcid_raw && '' === $settings['orcid_id'];
 		$settings['refresh']        = isset( $posted['refresh'] ) ? sanitize_key( $posted['refresh'] ) : 'daily';
 		$settings['max_details_run'] = isset( $posted['max_details_run'] ) ? absint( $posted['max_details_run'] ) : 10;
 		$settings['quota_reserve']   = isset( $posted['quota_reserve'] ) ? absint( $posted['quota_reserve'] ) : 40;
@@ -92,8 +96,45 @@ class SchPub_Admin {
 		update_option( 'schpub_settings', $settings, false );
 		SchPub_Sync::reschedule();
 
+		if ( $orcid_rejected ) {
+			wp_safe_redirect( self::redirect_url( 'orcid_invalid' ) );
+			exit;
+		}
+
 		wp_safe_redirect( self::redirect_url( 'saved' ) );
 		exit;
+	}
+
+	/**
+	 * Reduce an ORCID iD to its canonical 16-character form.
+	 *
+	 * Accepts either a bare iD or a full orcid.org URI, and validates the
+	 * checksum so a mistyped iD is rejected rather than rendered as a dead
+	 * link. The final character is a check digit that may be the letter X.
+	 *
+	 * @param  string $value Raw submitted value.
+	 * @return string Canonical iD, or an empty string when invalid.
+	 */
+	private static function sanitize_orcid( $value ) {
+		$value = trim( sanitize_text_field( $value ) );
+		$value = preg_replace( '#^https?://(?:www\.)?orcid\.org/#i', '', $value );
+
+		if ( ! preg_match( '/^\d{4}-\d{4}-\d{4}-\d{3}[\dXx]$/', $value ) ) {
+			return '';
+		}
+
+		$value  = strtoupper( $value );
+		$digits = str_replace( '-', '', $value );
+
+		// ISO 7064 MOD 11-2, as specified for the ORCID identifier.
+		$total = 0;
+		for ( $i = 0; $i < 15; $i++ ) {
+			$total = ( $total + (int) $digits[ $i ] ) * 2;
+		}
+		$expected = ( 12 - ( $total % 11 ) ) % 11;
+		$expected = 10 === $expected ? 'X' : (string) $expected;
+
+		return $expected === substr( $digits, 15, 1 ) ? $value : '';
 	}
 
 	/**
@@ -163,6 +204,10 @@ class SchPub_Admin {
 			'cleared' => array( 'success', __( 'Cached Scholar data cleared.', 'scholar-publications' ) ),
 			'synced'  => array( 'success', __( 'Synced with Google Scholar.', 'scholar-publications' ) ),
 			'error'   => array( 'error', __( 'The sync failed.', 'scholar-publications' ) ),
+			'orcid_invalid' => array(
+				'warning',
+				__( 'Settings saved, but the ORCID iD was not recognised and has been left empty. Expected the form 0000-0002-1825-0097.', 'scholar-publications' ),
+			),
 		);
 
 		if ( ! isset( $map[ $notice ] ) ) {
@@ -339,6 +384,14 @@ class SchPub_Admin {
 							<input name="scholar_id" id="schpub_scholar_id" type="text" class="regular-text"
 								value="<?php echo esc_attr( $settings['scholar_id'] ); ?>" />
 							<p class="description"><?php esc_html_e( 'The user parameter from your Scholar profile URL, e.g. AbCdEfGhIjKl.', 'scholar-publications' ); ?></p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="schpub_orcid_id"><?php esc_html_e( 'ORCID iD', 'scholar-publications' ); ?></label></th>
+						<td>
+							<input name="orcid_id" id="schpub_orcid_id" type="text" class="regular-text"
+								value="<?php echo esc_attr( $settings['orcid_id'] ); ?>" />
+							<p class="description"><?php esc_html_e( 'Optional. Shown beside the Scholar profile link, e.g. 0000-0002-1825-0097. A full orcid.org URL is accepted too.', 'scholar-publications' ); ?></p>
 						</td>
 					</tr>
 					<tr>

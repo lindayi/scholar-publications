@@ -5,6 +5,19 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-09-02
+
+### Added
+
+- An optional ORCID iD setting. When set, the metrics rail shows the iD beside
+  the Google Scholar profile link, carrying the ORCID iD mark and linking to the
+  full `https://orcid.org/` URI as the display guidelines require. The icon is
+  inlined, so the page still makes no third-party requests.
+- The submitted value may be a bare iD or a full orcid.org URL, and is checked
+  against the ISO 7064 MOD 11-2 checksum so a mistyped iD is rejected rather
+  than published as a dead link. A rejected value raises an admin warning
+  instead of being discarded silently.
+
 ## [1.0.1] - 2026-08-30
 
 ### Changed

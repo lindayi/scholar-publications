@@ -83,6 +83,20 @@
 	text-decoration: underline;
 }
 
+/* The mark sits on the text baseline and tracks the adjacent font size, with
+   the buffer space the ORCID display guidelines ask for. */
+.schpub-orcid-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5em;
+}
+
+.schpub-orcid-icon {
+	width: 1em;
+	height: 1em;
+	flex: none;
+}
+
 /* ---------- citations chart ---------- */
 
 .schpub-chart {
